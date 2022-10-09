@@ -44,6 +44,15 @@ def daysLeft(startDate):
 def getTimeInGoogleCalFormat(time):
     return (datetime.datetime.fromisoformat(time)).strftime('%Y%m%dT%H%M%SZ').replace(' ','')
 
+def formatPrize(prize):
+    amount = prize['cash']
+    amount = "{:,}".format(amount)
+    currency = prize['currency']
+    if currency == 'fa-usd':
+        return f'${str(amount)}'
+    elif(currency == 'fa-rupee'):
+        return f'₹ {str(amount)}'
+
 
 def getTimeInTickTickFormat(time):
     time = ((datetime.datetime.fromisoformat(time) + datetime.timedelta(hours=5, minutes=30)).strftime(

@@ -12,21 +12,22 @@ def sendNoContestsToday():
     webhookForNoContest.execute()
 
 
-def sendContestAlerts(contestList):
+def sendContestAlerts(hackathons):
     webhook = DiscordWebhook(url=os.environ.get('DISCORD_WEBHOOK_URL'))
-    for contest in contestList:
-        embed = DiscordEmbed(
-            title=contest["name"], description=contest["platform"], color='03b2f8')
+    for hackathon in hackathons:
+        embed = DiscordEmbed(title=hackathon["name"], description=hackathon["platform"], color='03b2f8')
         embed.set_footer(text='Made with ❤️ && ☕️', icon_url="")
-        embed.set_image(url=contest["thumbnail"])
+        embed.set_image(url=hackathon["thumbnail"])
 
         embed.set_timestamp()
-        embed.add_embed_field(name='Starts @', value=contest["start_iso"])
-        embed.add_embed_field(name='Ends @', value=contest["end_iso"])
+        embed.add_embed_field(name='Starts @', value=hackathon["start_iso"])
+        embed.add_embed_field(name='Ends @', value=hackathon["end_iso"])
+        embed.add_embed_field(name='Registration Ends in ', value=hackathon["regEnd"],inline=False)
+        embed.add_embed_field(name='Prize :', value=hackathon["prize"])
         embed.add_embed_field(
-            name='Find @', value=contest["link"], inline=False)
-        embed.add_embed_field(name='Mark the event @',
-                              value=f"[Add this to Google Calender]({contest['calender_event']})", inline=False)
+            name='Find @', value=hackathon["link"], inline=False)
+        embed.add_embed_field(name='Mark the event @',value=f"[Add this to Google Calender]({hackathon['calender_event']})", inline=False)
+        embed.set_author(name='Hackathon Alert', url=hackathon["link"])
         # embed.add_embed_field(name='Reminder @', value=f"{contest['ticktick_task']}", inline=False)
         webhook.add_embed(embed)
         # todo add a check if successful

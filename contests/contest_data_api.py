@@ -44,7 +44,6 @@ def fetchContestAPI():
             else:
                 contestDic["thumbnail"] = contest_utils.thumbnails["generic"]
 
-            pprint(json.dumps(contestDic,sort_keys=True, indent=4, separators=(",", ": ")))
             tempDic = contestDic.copy()
             contestList.append(tempDic)
             contestDic.clear()
