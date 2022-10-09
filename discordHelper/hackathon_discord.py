@@ -20,13 +20,13 @@ def isAlready(id):
         return False
 
 def sendNoContestsToday():
-    webhookForNoContest = DiscordWebhook(url=os.environ.get('DISCORD_WEBHOOK_URL'),
-                                         content=f'No contests today! Enjoy your free time 🌚👋🏻')
+    webhookForNoContest = DiscordWebhook(url=os.environ.get('DISCORD_HACKATHON_WEBHOOK_URL'),
+                                         content=f'No hackthons found! Enjoy your free time 🌚👋🏻')
     webhookForNoContest.execute()
 
 
 def sendContestAlerts(hackathons):
-    webhook = DiscordWebhook(url=os.environ.get('DISCORD_WEBHOOK_URL'))
+    webhook = DiscordWebhook(url=os.environ.get('DISCORD_HACKATHON_WEBHOOK_URL'))
     for hackathon in hackathons:
         if (isAlready(hackathon['id'])):
             continue
