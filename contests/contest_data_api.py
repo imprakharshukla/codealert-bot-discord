@@ -1,4 +1,8 @@
 import os
+import sys
+
+from pprint import pprint
+import json
 
 import requests
 from dotenv import load_dotenv
@@ -6,6 +10,7 @@ from dotenv import load_dotenv
 from discordHelper import webhook_manager
 from discordHelper.webhook_manager import sendNoContestsToday
 from settings import ENV
+
 from utils import contest_utils
 from utils.contest_utils import getTimeInISO, getGoogleCalenderLink, getTicktickReminderLink, getCurrentDate
 
@@ -39,7 +44,7 @@ def fetchContestAPI():
             else:
                 contestDic["thumbnail"] = contest_utils.thumbnails["generic"]
 
-            print(contestDic)
+            pprint(json.dumps(contestDic,sort_keys=True, indent=4, separators=(",", ": ")))
             tempDic = contestDic.copy()
             contestList.append(tempDic)
             contestDic.clear()

@@ -1,4 +1,5 @@
 import datetime
+from platform import platform
 import urllib.parse
 
 thumbnails = {
@@ -12,7 +13,8 @@ hostList = ["codechef.com", "codingninjas.com/codestudio"]
 
 def getGoogleCalenderLink(contestDic):
     escpName = urllib.parse.quote(contestDic['name'])
-    return f"https://calendar.google.com/calendar/event?action=TEMPLATE&dates={getTimeInGoogleCalFormat(contestDic['start'])}%2F{getTimeInGoogleCalFormat(contestDic['end'])}&text={escpName}&details={contestDic['link']}&location={contestDic['platform']} "
+    platformName = urllib.parse.quote(contestDic['platform'])
+    return f"https://calendar.google.com/calendar/event?action=TEMPLATE&dates={getTimeInGoogleCalFormat(contestDic['start'])}%2F{getTimeInGoogleCalFormat(contestDic['end'])}&text={escpName}&details={contestDic['link']}&location={platformName} "
 
 
 def getTicktickReminderLink(contestDic):
@@ -26,13 +28,21 @@ def getCurrentDate():
 
 
 def getTimeInISO(time):
-    istTime = datetime.datetime.fromisoformat(time) + datetime.timedelta(hours=5, minutes=30)
+    istTime = datetime.datetime.fromisoformat(
+        time) + datetime.timedelta(hours=5, minutes=30)
     return istTime.strftime('%d-%b-%y %H:%M:%S %p')
 
+def daysLeft(startDate):
+    start = datetime.datetime.fromisoformat(startDate).strftime('%d-%b-%y %H:%M:%S %p')
+    now = datetime.datetime.now().strftime('%d-%b-%y %H:%M:%S %p')
+    start = datetime.datetime.strptime(start, '%d-%b-%y %H:%M:%S %p')
+    now = datetime.datetime.strptime(now, '%d-%b-%y %H:%M:%S %p')
+    return str((start - now).days)
+
+    
 
 def getTimeInGoogleCalFormat(time):
-    return (datetime.datetime.fromisoformat(time)).strftime('%Y%m%dT%H%M%SZ').replace(
-        ' ', '')
+    return (datetime.datetime.fromisoformat(time)).strftime('%Y%m%dT%H%M%SZ').replace(' ','')
 
 
 def getTimeInTickTickFormat(time):
