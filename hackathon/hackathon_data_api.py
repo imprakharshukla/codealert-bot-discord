@@ -22,18 +22,15 @@ def fetchHackathonAPI():
     response = requests.get(URL)
     hackathonData = response.json()['data']['data']
 
-    # save hackathonData array to a json file
-    with open('./hackathonData.json', 'w') as outfile:
-        json.dump(hackathonData[0], outfile)
-
     hackathons = []
 
     for hack in hackathonData:
         startDate = getTimeInISO(hack['start_date'])
-        # find days left from start date and current date
         daysLeft = hackathon_utils.daysLeft(hack['start_date'])
+
         if (int(daysLeft) > 0):
             hackObj = {}
+            hackObj['id'] = hack['id']
             hackObj['name'] = hack['title']
             hackObj['start'] = hack['start_date']
             hackObj['end'] = hack['end_date']

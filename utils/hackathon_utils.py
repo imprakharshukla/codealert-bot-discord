@@ -49,7 +49,7 @@ def formatPrize(prize):
     amount = "{:,}".format(amount)
     currency = prize['currency']
     if currency == 'fa-usd':
-        return f'${str(amount)}'
+        return f'$ {str(amount)}'
     elif(currency == 'fa-rupee'):
         return f'₹ {str(amount)}'
 

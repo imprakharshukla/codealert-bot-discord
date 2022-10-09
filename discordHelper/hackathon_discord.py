@@ -1,10 +1,23 @@
 import os
+import json
 
 from discord_webhook import DiscordWebhook, DiscordEmbed
 from dotenv import load_dotenv
 
 load_dotenv()
 
+
+def isAlready(id):
+    with open('hackathon/already.json', 'r') as f:
+        data = json.load(f)
+    if id in data:
+        return True
+    else:
+        #add id to data
+        data.append(id)
+        with open('hackathon/already.json', 'w') as f:
+            json.dump(data, f)
+        return False
 
 def sendNoContestsToday():
     webhookForNoContest = DiscordWebhook(url=os.environ.get('DISCORD_WEBHOOK_URL'),
@@ -15,10 +28,11 @@ def sendNoContestsToday():
 def sendContestAlerts(hackathons):
     webhook = DiscordWebhook(url=os.environ.get('DISCORD_WEBHOOK_URL'))
     for hackathon in hackathons:
+        if (isAlready(hackathon['id'])):
+            continue
         embed = DiscordEmbed(title=hackathon["name"], description=hackathon["platform"], color='03b2f8')
         embed.set_footer(text='Made with ❤️ && ☕️', icon_url="")
         embed.set_image(url=hackathon["thumbnail"])
-
         embed.set_timestamp()
         embed.add_embed_field(name='Starts @', value=hackathon["start_iso"])
         embed.add_embed_field(name='Ends @', value=hackathon["end_iso"])
