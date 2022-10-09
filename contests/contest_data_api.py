@@ -5,10 +5,12 @@ from dotenv import load_dotenv
 
 from discordHelper import webhook_manager
 from discordHelper.webhook_manager import sendNoContestsToday
+from settings import ENV
 from utils import contest_utils
 from utils.contest_utils import getTimeInISO, getGoogleCalenderLink, getTicktickReminderLink, getCurrentDate
 
-load_dotenv()
+if ENV == "DEV":
+    load_dotenv()
 
 
 def fetchContestAPI():
