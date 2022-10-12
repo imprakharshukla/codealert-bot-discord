@@ -12,14 +12,15 @@ if ENV == "DEV":
 
 
 def fetchHackathonAPI():
-    URL = "https://unstop.com/api/public/opportunity/search-new?opportunity=hackathons&sort=daysleft&dir=asc&filters" \
-          "=All,All,open,3&types=payment,eligible,oppstatus," \
-          "teamsize&atype=explore&page=1&showOlderResultForSearch=true "
+    hackathons = []
+
+
+    # Fetching Hackathon from UNSTOP
+
+    URL = "https://unstop.com/api/public/opportunity/search-new?opportunity=hackathons&sort=daysleft&dir=asc&filterxs=All,All,open,3&types=payment,eligible,oppstatus,teamsize&atype=explore&page=1&showOlderResultForSearch=true "
 
     response = requests.get(URL)
     hackathonData = response.json()['data']['data']
-
-    hackathons = []
 
     for hack in hackathonData:
         startDate = getTimeInISO(hack['start_date'])
@@ -45,7 +46,10 @@ def fetchHackathonAPI():
                 hackObj['isPaid'] = False
                 hackObj['prize'] = "No Prize"
             hackathons.append(hackObj)
-    if len(hackathons) == 0:
-        sendNoContestsToday()
-    else:
-        hackathon_discord.sendContestAlerts(hackathons)
+
+    # Fetching Hackathon from devpost.com
+    
+
+
+
+    hackathon_discord.sendContestAlerts(hackathons)
