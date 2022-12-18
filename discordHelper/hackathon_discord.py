@@ -8,14 +8,14 @@ load_dotenv()
 
 
 def isAlready(id):
-    with open('hackathon/already.json', 'r') as f:
+    with open('/home/areeburrub/codealert-bot-discord/hackathon/already.json', 'r') as f:
         data = json.load(f)
     if id in data:
         return True
     else:
         #add id to data
         data.append(id)
-        with open('hackathon/already.json', 'w') as f:
+        with open('/home/areeburrub/codealert-bot-discord/hackathon/already.json', 'w') as f:
             json.dump(data, f)
         return False
 
