@@ -4,4 +4,3 @@ from hackathon.devfolio_hackathon_api import fetchDevfolioHackathonAPI
 
 # fetchContestAPI()
 fetchHackathonAPI()
-# fetchDevfolioHackathonAPI()
